@@ -5,7 +5,18 @@ orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
 
+commands:
+  print_pipeline_id:
+    steps:
+      - run: echo $CIRCLE_WORKFLOW_ID
+
 jobs:
+  print_pipeline_id_by_command:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - print_pipeline_id
+
   save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
@@ -39,6 +50,7 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
+      - print_pipeline_id_by_command
       - save_hello_world_output
       - print_output_file:
           requires: [save_hello_world_output]
