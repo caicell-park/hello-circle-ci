@@ -4,16 +4,22 @@ version: 2.1
 orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
-  
+
 jobs:
   print_hello:
     docker:
       - image: circleci/node:13.8.0
+    environment:
+      CONTAINER: container
     steps:
       - run:
-          name: print hello
+          name: env var ORGANIZATION in context and PROJECT in project
           command: |
             echo hello
+            echo $ORGANIZATION
+            echo $PROJECT
+            echo $CONTAINER
+
   print_world:
     docker:
       - image: circleci/node:13.8.0
@@ -30,6 +36,8 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
-      - print_hello
+      - print_hello:
+          context: su-park-context
+
       - print_world:
           requires: [print_hello]

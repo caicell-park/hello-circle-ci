@@ -1,0 +1,6 @@
+Environment Variable	Description
+CIRCLE_BRANCH	The name of the Git branch currently being built
+CIRCLE_WORKFLOW_ID	A unique identifier for the workflow instance of the current job
+CIRCLE_BUILD_NUM	The number of the CircleCI build
+CIRCLE_PR_NUMBER	The number of the associated GitHub or Bitbucket pull request
+CIRCLE_SHA1	The SHA1 hash of the last commit of the current build
