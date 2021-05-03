@@ -11,6 +11,18 @@ commands:
       - run: echo $CIRCLE_WORKFLOW_ID
 
 jobs:
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Ensure backend infrastructure exist
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/template.yml \
+              --stack-name infra
+
   handle_none_zero_exit:
     docker:
       - image: circleci/node:13.8.0
@@ -54,13 +66,6 @@ jobs:
 
 # Orchestrate or schedule a set of jobs
 workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
+  create_infra:
     jobs:
-      - welcome/run
-      - handle_none_zero_exit
-      - print_pipeline_id_by_command
-      - save_hello_world_output
-      - print_output_file:
-          requires: [save_hello_world_output]
+      - create_infrastructure

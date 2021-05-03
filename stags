@@ -1,0 +1,15 @@
+1. Build
+
+npm run lint
+
+2. Test
+
+npm run test
+
+3. Analyze
+
+npm audit
+4. Deploy
+5. Verify
+6. Promote
+
